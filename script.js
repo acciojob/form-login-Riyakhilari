@@ -1,11 +1,25 @@
-function getFormvalue() {
-      const firstNameInput = document.getElementById("firstName");
-      const lastNameInput = document.getElementById("lastName");
+describe('Form Submission', () => {
+  it('should allow a user to input their first and last name and submit the form', () => {
+    cy.visit('/'); 
 
-      const firstName = firstNameInput.value;
-      const lastName = lastNameInput.value;
+    cy.get('#firstName').type('John');
+    cy.get('#lastName').type('Doe');
+    cy.get('button[type="submit"]').click();
 
-      const fullName = firstName + " " + lastName;
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('John Doe');
+    });
+  });
 
-      alert(fullName);
-    }
+  it('should allow a user to input their first, middle and last name and submit the form', () => {
+    cy.visit('/'); 
+
+    cy.get('#firstName').type('John');
+    cy.get('#lastName').type('Mark Doe'); 
+    cy.get('button[type="submit"]').click();
+
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('John Mark Doe');
+    });
+  });
+});
